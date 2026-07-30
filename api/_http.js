@@ -1,0 +1,7 @@
+async function readJson(req){if(req.body&&typeof req.body==='object')return req.body;if(typeof req.body==='string'){try{return JSON.parse(req.body)}catch{return{}}}const chunks=[];for await(const c of req)chunks.push(c);const raw=Buffer.concat(chunks).toString('utf8');if(!raw)return{};try{return JSON.parse(raw)}catch{return{}}}
+function json(res,status,payload){res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store, no-cache, must-revalidate, proxy-revalidate');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.statusCode=status;return res.end(JSON.stringify(payload))}
+function method(req,res,allowed){if(allowed.includes(req.method))return true;res.setHeader('Allow',allowed.join(', '));json(res,405,{ok:false,error:'Método não permitido.'});return false}
+function getCookies(req){const out={};for(const p of String(req.headers?.cookie||'').split(';')){const i=p.indexOf('=');if(i<0)continue;const k=p.slice(0,i).trim(),v=p.slice(i+1).trim();if(k)out[k]=decodeURIComponent(v)}return out}
+function clientIp(req){return String(req.headers?.['x-forwarded-for']||req.socket?.remoteAddress||'').split(',')[0].trim().slice(0,100)}
+function errorMessage(e,f='Não foi possível concluir a operação.'){const m=String(e?.message||'').trim();if(!m)return f;if(/password|secret|token|database_url|postgres/i.test(m))return f;return m.slice(0,300)}
+module.exports={readJson,json,method,getCookies,clientIp,errorMessage};

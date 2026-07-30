@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vendeu, Ganhou</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="pagina">
+    <section class="hero">
+      <div class="logo-wrap">
+        <img src="totalcash.png" alt="Logo da campanha" class="logo" id="logoCampanha" />
+      </div>
+
+      <div class="titulo-area">
+        <p class="tag" id="tagCampanha">TOTAL CASH</p>
+        <h1 id="tituloCampanha">VENDEU, GANHOU</h1>
+        <p class="instrucao" id="instrucaoCampanha">Digite seu código, escolha uma carta e descubra seu prêmio.</p>
+      </div>
+    </section>
+
+    <section class="painel-login" id="painelLogin">
+      <h2>Entrar no jogo</h2>
+      <p>Use o código que você recebeu para participar.</p>
+
+      <form id="formCodigo" class="form-codigo">
+        <input
+          type="text"
+          id="codigoUsuario"
+          placeholder="Exemplo: TC-001"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="btnEntrar">Entrar</button>
+      </form>
+
+      <div class="erro" id="erroLogin"></div>
+    </section>
+
+    <section class="painel-jogo escondido" id="painelJogo">
+      <div class="usuario-barra">
+        <div>
+          <span>Participante</span>
+          <strong id="nomeParticipante">-</strong>
+        </div>
+
+        <button type="button" class="btn-secundario" id="btnTrocarUsuario">
+          Trocar usuário
+        </button>
+      </div>
+
+      <p class="instrucao jogo">
+        Escolha apenas uma carta. Depois disso, sua participação fica bloqueada.
+      </p>
+
+      <div class="tabuleiro" id="tabuleiro"></div>
+
+      <div class="mensagem" id="mensagem"></div>
+    </section>
+  </main>
+
+  <div class="carregando escondido" id="carregando">
+    <div class="spinner"></div>
+    <p>Registrando...</p>
+  </div>
+
+  <div class="overlay-sorteio escondido" id="overlaySorteio">
+    <div class="overlay-card">
+      <div class="overlay-luzes">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <p class="overlay-tag" id="overlayTag">TOTAL CASH</p>
+      <h2 id="overlayTitulo">Preparando seu sorteio</h2>
+      <div class="overlay-contador" id="overlayContador">3</div>
+      <p class="overlay-texto" id="overlayTexto">Segura aí... a sorte está girando!</p>
+    </div>
+  </div>
+
+  <div class="chuva-premio escondido" id="chuvaPremio"></div>
+
+  <a href="/admin" class="admin-access">Administração</a>
+  <script src="app.js"></script>
+</body>
+</html>

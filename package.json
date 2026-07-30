@@ -1,0 +1,9 @@
+{
+  "name": "vendeu-ganhou-campanhas",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Plataforma de campanha promocional com painel administrativo e banco Postgres.",
+  "scripts": {"start":"node server-local.js","dev":"node server-local.js","vercel-dev":"vercel dev","check":"node scripts/check.js"},
+  "engines":{"node":">=20"},
+  "dependencies":{"pg":"^8.16.3"}
+}

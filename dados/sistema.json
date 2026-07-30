@@ -1,0 +1,209 @@
+{
+  "version": 5,
+  "settings": {
+    "campaignName": "VENDEU, GANHOU",
+    "campaignTag": "TOTAL CASH",
+    "instruction": "Digite seu código, escolha uma carta e descubra seu prêmio.",
+    "logoUrl": "/totalcash.png",
+    "primaryColor": "#255a9c",
+    "secondaryColor": "#226f2b",
+    "whatsappEnabled": false,
+    "adminWhatsapp": "",
+    "createdAt": "2026-07-30T12:57:43.237Z",
+    "updatedAt": "2026-07-30T12:57:43.237Z"
+  },
+  "participants": [
+    {
+      "id": "25cb1568-1841-428c-9d0e-14ba27102268",
+      "code": "2309",
+      "name": "2012",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "2445060f-df85-4eca-bd1f-ebc4aa606203",
+      "code": "462",
+      "name": "10892",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "PIX DE R$ 14,00",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "56906aea-8273-4cf9-9120-6237d12bcac4",
+      "code": "3609",
+      "name": "10683",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "414de8ca-3ff6-48ab-b779-702edc306059",
+      "code": "5820",
+      "name": "8627",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "1b0915de-31f1-429c-9d49-7dd29df4d0bf",
+      "code": "1999",
+      "name": "10816",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "b13d7776-3f66-47dc-a6c7-0ea57d765db4",
+      "code": "2630",
+      "name": "6897",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "b7ff9c93-566d-431a-ae73-5dc752ed0a98",
+      "code": "4603",
+      "name": "1084",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "4fa41bf3-f047-4374-b9a9-6a26feeab1f0",
+      "code": "3964",
+      "name": "1084",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "000e5a5e-50ea-4fee-b319-5a81c86bfa28",
+      "code": "5402",
+      "name": "1084",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "3709d153-6ecf-4941-80c8-eec1d4b35eb7",
+      "code": "1412",
+      "name": "10816",
+      "contact": "DANIELE",
+      "active": true,
+      "fixedPrize": "",
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    }
+  ],
+  "prizes": [
+    {
+      "id": "963e6e7e-8f0a-4397-9a8d-2d101a733ea9",
+      "name": "PIX DE R$ 20,00",
+      "quantity": 80,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "931d8249-44e9-4cbe-84f3-5273d44e54c5",
+      "name": "PIX DE R$ 25,00",
+      "quantity": 10,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "e11b5366-f33d-42ab-a01c-de295ab1c974",
+      "name": "PIX DE R$ 50,00",
+      "quantity": 2,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "6c16caea-3d83-46af-9e8a-700921724cc1",
+      "name": "PIX DE R$ 100,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "91118122-efbe-48d3-a9d6-1eb1281ed635",
+      "name": "PIX DE R$ 200,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "402dbb35-07a4-45b3-9a50-65a421d81432",
+      "name": "PIX DE R$ 300,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "ce405b5d-96ff-43b6-863b-13fc67a81bcf",
+      "name": "PIX DE R$ 400,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "4d0d0030-79a7-44cf-b126-9861ce3f7449",
+      "name": "PIX DE R$ 500,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "5f933424-302e-493e-ad70-6a4ef5615d35",
+      "name": "PIX DE R$ 600,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "5739ec65-df5a-43fa-a9fc-13fc19b5cd46",
+      "name": "PIX DE R$ 700,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    },
+    {
+      "id": "0dcb68de-607f-4a84-a8ac-6059b56ce0f4",
+      "name": "PIX DE R$ 800,00",
+      "quantity": 1,
+      "active": true,
+      "createdAt": "2026-07-30T12:57:43.237Z",
+      "updatedAt": "2026-07-30T12:57:43.237Z"
+    }
+  ],
+  "participations": [],
+  "audit": []
+}

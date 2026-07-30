@@ -1,0 +1,1 @@
+const{json,method}=require('../_http');const{clearCookie}=require('../_auth');module.exports=async(req,res)=>{if(!method(req,res,['POST']))return;res.setHeader('Set-Cookie',clearCookie(req));json(res,200,{ok:true})};
