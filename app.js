@@ -26,14 +26,14 @@ function normalizarCodigo(codigo) {
 }
 
 function chaveEstado(codigo) {
-  return `vendeu-ganhou-jogo:${normalizarCodigo(codigo)}`;
+  return `total-cash-jogo:${normalizarCodigo(codigo)}`;
 }
 
 function salvarEstado(codigo, dados) {
   const chave = chaveEstado(codigo);
   const atual = carregarEstado(codigo) || {};
   localStorage.setItem(chave, JSON.stringify({ ...atual, ...dados }));
-  localStorage.setItem('vendeu-ganhou-ultimo-codigo', normalizarCodigo(codigo));
+  localStorage.setItem('total-cash-ultimo-codigo', normalizarCodigo(codigo));
 }
 
 function carregarEstado(codigo) {
@@ -43,6 +43,29 @@ function carregarEstado(codigo) {
   } catch {
     return null;
   }
+}
+
+function limparEstado(codigo) {
+  if (codigo) {
+    localStorage.removeItem(chaveEstado(codigo));
+  }
+
+  localStorage.removeItem('total-cash-ultimo-codigo');
+  localStorage.removeItem('vendeu-ganhou-ultimo-codigo');
+}
+
+function mostrarTelaCodigo({ limparCampo = false } = {}) {
+  usuarioAtual = null;
+  jogoAtivo = false;
+
+  erroLogin.innerText = '';
+  mensagem.innerText = '';
+  tabuleiro.innerHTML = '';
+
+  painelJogo.classList.add('escondido');
+  painelLogin.classList.remove('escondido');
+
+  if (limparCampo) codigoUsuario.value = '';
 }
 
 function sleep(ms) {
@@ -154,7 +177,7 @@ function criarCartas(total) {
         <div class="carta-face carta-verso">
           <div class="carta-brilho"></div>
           <div class="logo-carta-box">
-            <img src="totalcash.png" class="logo-carta" alt="Total Cash" />
+            <img src="${campaignSettings.logoUrl || '/totalcash.png'}" class="logo-carta" alt="Total Cash" />
           </div>
           <div class="numero-carta">${i}</div>
           <div class="texto-carta">Escolha sua sorte</div>
@@ -335,17 +358,20 @@ formCodigo.addEventListener('submit', async (event) => {
     return;
   }
 
-  const estadoSalvo = carregarEstado(codigo);
-  if (estadoSalvo && estadoSalvo.usuario) {
-    abrirJogo(estadoSalvo.usuario, estadoSalvo.quantidadeCartas || quantidadeCartas);
-    return;
-  }
-
   try {
     btnEntrar.disabled = true;
     mostrarCarregando('Entrando no jogo...');
 
     const dados = await chamarApi('/api/entrar', { codigo });
+
+    if (dados.finalizado) {
+      limparEstado(codigo);
+      erroLogin.innerText = 'Este código já foi utilizado e a participação já foi concluída.';
+      codigoUsuario.focus();
+      codigoUsuario.select();
+      return;
+    }
+
     const mapa = normalizarMapaPremios(dados);
 
     salvarEstado(codigo, {
@@ -397,16 +423,9 @@ async function virarCarta(cartaClicada) {
       `Parabéns, ${dados.usuario.nome}! Você ganhou: ${dados.premio}. ` +
       `Resultado registrado com sucesso. A confirmação oficial será feita pela equipe responsável.`;
 
-    salvarEstado(usuarioAtual.codigo, {
-      usuario: dados.usuario,
-      quantidadeCartas,
-      finalizado: true,
-      premio: dados.premio,
-      cartaEscolhida: dados.cartaEscolhida || cartaClicada.dataset.carta,
-      sorteadoEm: new Date().toISOString(),
-      mapaPremios: mapa,
-      cartasReveladas: mapa,
-    });
+    // Depois do sorteio, não mantém o participante conectado no navegador.
+    // Ao atualizar, reabrir o link ou voltar pelo Safari, a página retorna ao campo de código.
+    limparEstado(usuarioAtual.codigo);
   } catch (erro) {
     cartaClicada.classList.remove('selecionada', 'revelando');
     mensagem.innerText = erro.message;
@@ -418,26 +437,16 @@ async function virarCarta(cartaClicada) {
 }
 
 btnTrocarUsuario.addEventListener('click', () => {
-  usuarioAtual = null;
-  jogoAtivo = false;
-
-  codigoUsuario.value = '';
-  erroLogin.innerText = '';
-  mensagem.innerText = '';
-  tabuleiro.innerHTML = '';
-
-  painelJogo.classList.add('escondido');
-  painelLogin.classList.remove('escondido');
+  if (usuarioAtual?.codigo) limparEstado(usuarioAtual.codigo);
+  mostrarTelaCodigo({ limparCampo: true });
   codigoUsuario.focus();
 });
 
-window.addEventListener('load', () => {
-  const ultimoCodigo = localStorage.getItem('vendeu-ganhou-ultimo-codigo') || localStorage.getItem('total-cash-ultimo-codigo');
-  const estado = ultimoCodigo ? carregarEstado(ultimoCodigo) : null;
-
-  if (estado && estado.usuario) {
-    abrirJogo(estado.usuario, estado.quantidadeCartas || quantidadeCartas);
-  }
+// Sempre começa pela tela de código. Isso também corrige a restauração automática
+// de páginas pelo cache de navegação do Safari (bfcache).
+window.addEventListener('pageshow', () => {
+  mostrarTelaCodigo({ limparCampo: true });
+  limparEstado();
 });
 
 window.addEventListener('pointerdown', garantirAudio, { once: true });
@@ -446,5 +455,5 @@ window.addEventListener('pointerdown', garantirAudio, { once: true });
 
 
 
-async function carregarConfiguracaoPublica(){try{const r=await fetch('/api/public-config',{cache:'no-store'}),d=await r.json();if(!r.ok||!d.ok)return;campaignSettings=d.settings||campaignSettings;const title=document.getElementById('tituloCampanha'),tag=document.getElementById('tagCampanha'),inst=document.getElementById('instrucaoCampanha'),logo=document.getElementById('logoCampanha'),overlay=document.getElementById('overlayTag');if(title)title.textContent=campaignSettings.campaignName||'VENDEU, GANHOU';if(tag){tag.textContent=campaignSettings.campaignTag||'';tag.style.display=campaignSettings.campaignTag?'':'none'}if(inst)inst.textContent=campaignSettings.instruction||'';if(logo&&campaignSettings.logoUrl)logo.src=campaignSettings.logoUrl;if(overlay)overlay.textContent=campaignSettings.campaignTag||campaignSettings.campaignName||'';if(campaignSettings.primaryColor)document.documentElement.style.setProperty('--tc-blue',campaignSettings.primaryColor);if(campaignSettings.secondaryColor)document.documentElement.style.setProperty('--tc-green',campaignSettings.secondaryColor);document.title=campaignSettings.campaignName||'Vendeu, Ganhou'}catch(e){console.warn('Configuração pública indisponível:',e.message)}}
+async function carregarConfiguracaoPublica(){try{const r=await fetch('/api/public-config',{cache:'no-store'}),d=await r.json();if(!r.ok||!d.ok)return;campaignSettings=d.settings||campaignSettings;const title=document.getElementById('tituloCampanha'),tag=document.getElementById('tagCampanha'),inst=document.getElementById('instrucaoCampanha'),logo=document.getElementById('logoCampanha'),overlay=document.getElementById('overlayTag');if(title)title.textContent=campaignSettings.campaignName||'VENDEU, GANHOU';if(tag){tag.textContent=campaignSettings.campaignTag||'';tag.style.display=campaignSettings.campaignTag?'':'none'}if(inst)inst.textContent=campaignSettings.instruction||'';if(logo&&campaignSettings.logoUrl)logo.src=campaignSettings.logoUrl;if(overlay)overlay.textContent=campaignSettings.campaignTag||campaignSettings.campaignName||'';if(campaignSettings.primaryColor)document.documentElement.style.setProperty('--tc-blue',campaignSettings.primaryColor);if(campaignSettings.secondaryColor)document.documentElement.style.setProperty('--tc-green',campaignSettings.secondaryColor);document.title=`${campaignSettings.campaignName||'Vendeu, Ganhou'} | Total Cash`}catch(e){console.warn('Configuração pública indisponível:',e.message)}}
 carregarConfiguracaoPublica();
