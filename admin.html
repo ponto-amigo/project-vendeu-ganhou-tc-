@@ -1,14 +1,113 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Painel da campanha</title><link rel="stylesheet" href="admin.css"></head><body>
-<section id="loginPage" class="login-page"><div class="login-card"><div class="brand">TC</div><p class="eyebrow">GESTÃO DA CAMPANHA TC</p><h1>Controle TOTAL de TUDÃO.</h1><p class="muted">Cadastre participantes, configure prêmios e acompanhe os resultados.</p><form id="loginForm" class="form"><label>E-mail<input id="loginEmail" type="email" autocomplete="username" required></label><label>Senha<input id="loginPassword" type="password" autocomplete="current-password" required></label><button class="btn primary" type="submit">Entrar no painel</button></form><p id="loginError" class="error"></p><a href="/" class="link">← Abrir campanha</a></div></section>
-<div id="appShell" class="shell hidden"><aside id="sidebar" class="sidebar"><div class="side-brand"><div class="brand small">VG</div><div><strong>Vendeu, Ganhou</strong><span>Painel administrativo</span></div></div><nav><button class="nav active" data-view="dashboard">⌂ Visão geral</button><button class="nav" data-view="participants">♙ Participantes</button><button class="nav" data-view="prizes">★ Prêmios</button><button class="nav" data-view="results">✓ Resultados</button><button class="nav" data-view="settings">⚙ Configurações</button></nav><div class="side-bottom"><a href="/" target="_blank">Abrir campanha ↗</a><button id="logoutBtn">Sair</button></div></aside>
-<main class="main"><header class="top"><button id="menuBtn" class="menu">☰</button><div><p id="pageEye" class="eyebrow">PAINEL</p><h2 id="pageTitle">Visão geral</h2></div><div class="admin-chip"><i></i><span id="adminEmail">Administrador</span></div></header><div id="systemAlert" class="alert hidden"></div>
-<section id="view-dashboard" class="view active"><div id="metrics" class="metrics"></div><div class="grid2"><article class="panel"><div class="panel-head"><div><p class="eyebrow">MOVIMENTAÇÃO</p><h3>Resultados recentes</h3></div><button class="text-btn" data-view="results">Ver todos</button></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Prêmio</th><th>Data</th></tr></thead><tbody id="recentBody"></tbody></table></div></article><article class="panel"><div class="panel-head"><div><p class="eyebrow">ESTRUTURA</p><h3>Status do sistema</h3></div></div><div id="health" class="health"></div></article></div></section>
-<section id="view-participants" class="view"><div class="actions"><div class="filters"><input id="participantSearch" placeholder="Buscar código, nome ou contato"><select id="participantStatus"><option value="all">Todos</option><option value="active">Ativos</option><option value="inactive">Inativos</option></select></div><div><button id="importBtn" class="btn secondary">Importar CSV</button><button id="newParticipantBtn" class="btn primary">+ Novo participante</button></div></div><article class="panel"><div class="panel-head"><div><p class="eyebrow">CADASTROS</p><h3>Participantes <span id="participantCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Contato</th><th>Situação</th><th>Resultado</th><th></th></tr></thead><tbody id="participantsBody"></tbody></table></div><div id="participantsEmpty" class="empty hidden">Nenhum participante encontrado.</div></article></section>
-<section id="view-prizes" class="view"><div class="actions"><p class="muted">A quantidade define quantas cartas daquele prêmio aparecem em cada rodada.</p><button id="newPrizeBtn" class="btn primary">+ Novo prêmio</button></div><article class="panel"><div class="panel-head"><div><p class="eyebrow">CONFIGURAÇÃO</p><h3>Prêmios <span id="prizeCount" class="count">0</span></h3></div><span id="cardsSummary" class="pill">0 cartas ativas</span></div><div class="table-wrap"><table><thead><tr><th>Prêmio</th><th>Cartas</th><th>Status</th><th></th></tr></thead><tbody id="prizesBody"></tbody></table></div></article></section>
-<section id="view-results" class="view"><div class="actions"><div class="filters"><input id="resultSearch" placeholder="Buscar participante"><input id="resultPrize" placeholder="Filtrar prêmio"></div><button id="exportBtn" class="btn secondary">Exportar CSV</button></div><article class="panel"><div class="panel-head"><div><p class="eyebrow">HISTÓRICO</p><h3>Resultados <span id="resultCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Carta</th><th>Prêmio</th><th>Entrada</th><th>Sorteio</th></tr></thead><tbody id="resultsBody"></tbody></table></div><div id="resultsEmpty" class="empty hidden">Ainda não há resultados.</div></article></section>
-<section id="view-settings" class="view"><form id="settingsForm" class="settings"><article class="panel"><div class="panel-head"><div><p class="eyebrow">IDENTIDADE</p><h3>Dados da campanha</h3></div></div><div class="form-grid"><label class="full">Nome da campanha<input id="setName" required></label><label>Marca/assinatura<input id="setTag"></label><label>Endereço da logo<input id="setLogo" placeholder="/totalcash.png"></label><label class="full">Texto de orientação<textarea id="setInstruction" rows="3"></textarea></label><label>Cor principal<input id="setPrimary" type="color"></label><label>Cor secundária<input id="setSecondary" type="color"></label></div></article><article class="panel"><div class="panel-head"><div><p class="eyebrow">NOTIFICAÇÕES</p><h3>WhatsApp</h3></div></div><div class="form-grid"><label class="toggle full"><input id="setWhatsapp" type="checkbox"><span><strong>Enviar notificações</strong><small>Entrada e resultado serão enviados ao administrador.</small></span></label><label class="full">Número com DDD<input id="setNumber" inputmode="numeric" placeholder="5581999999999"></label><p class="note full">O token da AvisaAPI fica protegido nas variáveis de ambiente da Vercel.</p></div></article><div class="save"><span id="settingsStatus"></span><button class="btn primary" type="submit">Salvar configurações</button></div></form></section>
-</main></div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#08111f">
+  <title>Painel Total Cash</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="stylesheet" href="admin.css?v=12">
+</head>
+<body>
+<section id="loginPage" class="login-page">
+  <div class="login-card">
+    <div class="login-brand-wrap">
+      <div class="brand"><img src="/totalcash.png" alt="Total Cash"></div>
+      <div>
+        <p class="eyebrow">TOTAL CASH</p>
+        <span class="brand-subtitle">Gestão da campanha</span>
+      </div>
+    </div>
+    <h1>Controle sua campanha em um só lugar.</h1>
+    <p class="muted">Cadastre participantes, configure prêmios e acompanhe os resultados.</p>
+    <form id="loginForm" class="form">
+      <label>E-mail<input id="loginEmail" type="email" autocomplete="username" required></label>
+      <label>Senha<input id="loginPassword" type="password" autocomplete="current-password" required></label>
+      <button class="btn primary" type="submit">Entrar no painel</button>
+    </form>
+    <p id="loginError" class="error"></p>
+    <a href="/" class="link">← Abrir campanha</a>
+  </div>
+</section>
+
+<div id="appShell" class="shell hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="side-brand">
+      <div class="brand small"><img src="/totalcash.png" alt="Total Cash"></div>
+      <div><strong>Total Cash</strong><span>Campanha · Painel</span></div>
+    </div>
+    <nav>
+      <button class="nav active" data-view="dashboard">⌂ Visão geral</button>
+      <button class="nav" data-view="participants">♙ Participantes</button>
+      <button class="nav" data-view="prizes">★ Prêmios</button>
+      <button class="nav" data-view="results">✓ Resultados</button>
+      <button class="nav" data-view="settings">⚙ Configurações</button>
+    </nav>
+    <div class="campaign-card">
+      <span>Campanha ativa</span>
+      <strong>VENDEU, GANHOU</strong>
+      <small>Identidade Total Cash</small>
+      <a href="/" target="_blank">Ver página pública ↗</a>
+    </div>
+    <div class="side-bottom">
+      <a href="/" target="_blank">Abrir campanha ↗</a>
+      <button id="logoutBtn">Sair</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="top">
+      <button id="menuBtn" class="menu">☰</button>
+      <div><p id="pageEye" class="eyebrow">PAINEL</p><h2 id="pageTitle">Visão geral</h2></div>
+      <div class="admin-chip"><i></i><span id="adminEmail">Administrador</span></div>
+    </header>
+    <div id="systemAlert" class="alert hidden"></div>
+
+    <section id="view-dashboard" class="view active">
+      <div id="metrics" class="metrics"></div>
+      <div class="grid2">
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">MOVIMENTAÇÃO</p><h3>Resultados recentes</h3></div><button class="text-btn" data-view="results">Ver todos</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Participante</th><th>Prêmio</th><th>Data</th></tr></thead><tbody id="recentBody"></tbody></table></div>
+        </article>
+        <article class="panel">
+          <div class="panel-head"><div><p class="eyebrow">ESTRUTURA</p><h3>Status do sistema</h3></div></div>
+          <div id="health" class="health"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="view-participants" class="view">
+      <div class="actions"><div class="filters"><input id="participantSearch" placeholder="Buscar código, nome ou contato"><select id="participantStatus"><option value="all">Todos</option><option value="active">Ativos</option><option value="inactive">Inativos</option></select></div><div><button id="importBtn" class="btn secondary">Importar CSV</button><button id="newParticipantBtn" class="btn primary">+ Novo participante</button></div></div>
+      <article class="panel"><div class="panel-head"><div><p class="eyebrow">CADASTROS</p><h3>Participantes <span id="participantCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Contato</th><th>Situação</th><th>Resultado</th><th></th></tr></thead><tbody id="participantsBody"></tbody></table></div><div id="participantsEmpty" class="empty hidden">Nenhum participante encontrado.</div></article>
+    </section>
+
+    <section id="view-prizes" class="view">
+      <div class="actions"><p class="muted">A quantidade define quantas cartas daquele prêmio aparecem em cada rodada.</p><button id="newPrizeBtn" class="btn primary">+ Novo prêmio</button></div>
+      <article class="panel"><div class="panel-head"><div><p class="eyebrow">CONFIGURAÇÃO</p><h3>Prêmios <span id="prizeCount" class="count">0</span></h3></div><span id="cardsSummary" class="pill">0 cartas ativas</span></div><div class="table-wrap"><table><thead><tr><th>Prêmio</th><th>Cartas</th><th>Status</th><th></th></tr></thead><tbody id="prizesBody"></tbody></table></div></article>
+    </section>
+
+    <section id="view-results" class="view">
+      <div class="actions"><div class="filters"><input id="resultSearch" placeholder="Buscar participante"><input id="resultPrize" placeholder="Filtrar prêmio"></div><button id="exportBtn" class="btn secondary">Exportar CSV</button></div>
+      <article class="panel"><div class="panel-head"><div><p class="eyebrow">HISTÓRICO</p><h3>Resultados <span id="resultCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Carta</th><th>Prêmio</th><th>Entrada</th><th>Sorteio</th></tr></thead><tbody id="resultsBody"></tbody></table></div><div id="resultsEmpty" class="empty hidden">Ainda não há resultados.</div></article>
+    </section>
+
+    <section id="view-settings" class="view">
+      <form id="settingsForm" class="settings">
+        <article class="panel"><div class="panel-head"><div><p class="eyebrow">IDENTIDADE</p><h3>Dados da campanha</h3></div></div><div class="form-grid"><label class="full">Nome da campanha<input id="setName" required></label><label>Marca/assinatura<input id="setTag"></label><label>Endereço da logo<input id="setLogo" placeholder="/totalcash.png"></label><label class="full">Texto de orientação<textarea id="setInstruction" rows="3"></textarea></label><label>Cor principal<input id="setPrimary" type="color"></label><label>Cor secundária<input id="setSecondary" type="color"></label></div></article>
+        <article class="panel"><div class="panel-head"><div><p class="eyebrow">NOTIFICAÇÕES</p><h3>WhatsApp</h3></div></div><div class="form-grid"><label class="toggle full"><input id="setWhatsapp" type="checkbox"><span><strong>Enviar notificações</strong><small>Entrada e resultado serão enviados ao administrador.</small></span></label><label class="full">Número com DDD<input id="setNumber" inputmode="numeric" placeholder="5581999999999"></label><p class="note full">O token da AvisaAPI fica protegido nas variáveis de ambiente da Vercel.</p></div></article>
+        <div class="save"><span id="settingsStatus"></span><button class="btn primary" type="submit">Salvar configurações</button></div>
+      </form>
+    </section>
+  </main>
+</div>
+
 <dialog id="participantDialog" class="modal"><form id="participantForm"><div class="modal-head"><div><p class="eyebrow">PARTICIPANTE</p><h3 id="participantTitle">Novo participante</h3></div><button type="button" class="close" data-close="participantDialog">×</button></div><input id="participantId" type="hidden"><div class="form-grid"><label>Nome<input id="participantName" required></label><label>Código<div class="input-action"><input id="participantCode" required><button id="generateCode" type="button">Gerar</button></div></label><label>Contato<input id="participantContact"></label><label>Prêmio fixo<select id="participantFixed"><option value="">Sorteio normal</option></select></label><label class="toggle full"><input id="participantActive" type="checkbox" checked><span><strong>Participante ativo</strong><small>Somente ativos conseguem entrar.</small></span></label></div><p id="participantError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="participantDialog">Cancelar</button><button class="btn primary" type="submit">Salvar</button></div></form></dialog>
 <dialog id="prizeDialog" class="modal small"><form id="prizeForm"><div class="modal-head"><div><p class="eyebrow">PRÊMIO</p><h3 id="prizeTitle">Novo prêmio</h3></div><button type="button" class="close" data-close="prizeDialog">×</button></div><input id="prizeId" type="hidden"><div class="form-grid"><label class="full">Descrição<input id="prizeName" required></label><label>Quantidade<input id="prizeQuantity" type="number" min="1" max="500" value="1"></label><label class="toggle"><input id="prizeActive" type="checkbox" checked><span><strong>Prêmio ativo</strong><small>Entra nas próximas rodadas.</small></span></label></div><p id="prizeError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="prizeDialog">Cancelar</button><button class="btn primary" type="submit">Salvar</button></div></form></dialog>
 <dialog id="importDialog" class="modal"><form id="importForm"><div class="modal-head"><div><p class="eyebrow">IMPORTAÇÃO</p><h3>Importar participantes</h3></div><button type="button" class="close" data-close="importDialog">×</button></div><div class="drop"><input id="csvFile" type="file" accept=".csv,text/csv"><strong>Selecione um CSV</strong><span>Colunas: codigo, nome, contato, ativo e premioFixo.</span></div><label>Quando o código já existir<select id="importMode"><option value="skip">Ignorar</option><option value="update">Atualizar existente</option></select></label><div id="importPreview" class="preview hidden"></div><p id="importError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="importDialog">Cancelar</button><button id="importSubmit" class="btn primary" type="submit" disabled>Importar</button></div></form></dialog>
-<div id="toasts" class="toasts"></div><script src="admin.js"></script></body></html>
+
+<div id="toasts" class="toasts"></div>
+<script src="admin.js?v=12"></script>
+</body>
+</html>
