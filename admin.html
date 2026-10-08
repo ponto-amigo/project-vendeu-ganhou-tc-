@@ -90,7 +90,7 @@
 
     <section id="view-results" class="view">
       <div class="actions"><div class="filters"><input id="resultSearch" placeholder="Buscar participante"><input id="resultPrize" placeholder="Filtrar prêmio"></div><button id="exportBtn" class="btn secondary">Exportar CSV</button></div>
-      <article class="panel"><div class="panel-head"><div><p class="eyebrow">HISTÓRICO</p><h3>Resultados <span id="resultCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Carta</th><th>Prêmio</th><th>Entrada</th><th>Sorteio</th></tr></thead><tbody id="resultsBody"></tbody></table></div><div id="resultsEmpty" class="empty hidden">Ainda não há resultados.</div></article>
+      <article class="panel"><div class="panel-head"><div><p class="eyebrow">HISTÓRICO</p><h3>Resultados <span id="resultCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Carta</th><th>Prêmio</th><th>Entrada</th><th>Sorteio</th><th>Dados para pagamento</th></tr></thead><tbody id="resultsBody"></tbody></table></div><div id="resultsEmpty" class="empty hidden">Ainda não há resultados.</div></article>
     </section>
 
     <section id="view-settings" class="view">
@@ -108,6 +108,6 @@
 <dialog id="importDialog" class="modal"><form id="importForm"><div class="modal-head"><div><p class="eyebrow">IMPORTAÇÃO</p><h3>Importar participantes</h3></div><button type="button" class="close" data-close="importDialog">×</button></div><div class="drop"><input id="csvFile" type="file" accept=".csv,text/csv"><strong>Selecione um CSV</strong><span>Colunas: codigo, nome, contato, ativo e premioFixo.</span></div><label>Quando o código já existir<select id="importMode"><option value="skip">Ignorar</option><option value="update">Atualizar existente</option></select></label><div id="importPreview" class="preview hidden"></div><p id="importError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="importDialog">Cancelar</button><button id="importSubmit" class="btn primary" type="submit" disabled>Importar</button></div></form></dialog>
 
 <div id="toasts" class="toasts"></div>
-<script src="admin.js?v=12"></script>
+<script src="admin.js?v=13"></script>
 </body>
 </html>

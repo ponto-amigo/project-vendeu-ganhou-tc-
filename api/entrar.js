@@ -50,9 +50,11 @@ module.exports = async (req, res) => {
     );
 
     if (participacaoExistente?.finalized) {
-      return json(res, 409, {
-        ok: false,
-        erro: 'Este código já foi utilizado e a participação já foi concluída.',
+      return json(res, 200, {
+        ok:true,finalizado:true,pagamentoPendente:!participacaoExistente.paymentAt,
+        usuario:{codigo:participante.code,nome:participante.name},
+        premio:participacaoExistente.prize,
+        cartaEscolhida:participacaoExistente.selectedCard,
       });
     }
 

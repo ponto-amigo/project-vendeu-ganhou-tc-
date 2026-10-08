@@ -69,6 +69,22 @@
 
       <div class="mensagem" id="mensagem"></div>
     </section>
+    <section id="painelPagamento" class="painel-pagamento escondido">
+      <div class="pagamento-cabecalho"><span class="pagamento-etapa">ÚLTIMA ETAPA</span><h2>Receba seu prêmio 🎁</h2>
+        <p id="pagamentoResumo"></p><p>Informe os dados da conta para nossa equipe providenciar seu prêmio. Pode preencher agora ou voltar depois usando o mesmo código.</p></div>
+      <form id="formPagamento" class="pagamento-form">
+        <label>Favorecido<input name="favorecido" maxlength="160" autocomplete="name" required></label>
+        <label>CPF/CNPJ<input name="documento" maxlength="18" inputmode="numeric" required></label>
+        <label>Banco<input name="banco" maxlength="100" required></label>
+        <div class="pagamento-dupla"><label>Agência<input name="agencia" maxlength="30" required></label><label>Conta<input name="conta" maxlength="40" required></label></div>
+        <label>Operação <small>(ex.: 013, 001 ou não se aplica)</small><input name="operacao" maxlength="30" required></label>
+        <label>Chave Pix<input name="chavePix" maxlength="160" required></label>
+        <div id="pagamentoErro" class="erro" role="alert"></div>
+        <button id="btnSalvarPagamento" type="submit">Enviar dados para pagamento</button>
+        <button id="btnPagamentoDepois" type="button" class="pagamento-depois">Preencher depois</button>
+      </form>
+    </section>
+    <section id="pagamentoConcluido" class="painel-pagamento escondido"><h2>✅ Informações recebidas!</h2><p>Seus dados já estão registrados. Nosso time dará continuidade ao pagamento. Seu código permanece bloqueado para novos sorteios.</p><button id="btnVoltarPagamento" type="button">Voltar ao início</button></section>
   </main>
 
   <div class="carregando escondido" id="carregando">
@@ -93,6 +109,6 @@
   <div class="chuva-premio escondido" id="chuvaPremio"></div>
 
   <a href="/admin" class="admin-access">Administração</a>
-  <script src="app.js?v=12"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>

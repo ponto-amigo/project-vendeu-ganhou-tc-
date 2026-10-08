@@ -1125,3 +1125,8 @@ button:disabled {
     letter-spacing: .75px;
   }
 }
+
+/* Coleta de dados bancários após o sorteio */
+.painel-pagamento{width:min(100%,650px);margin:24px auto;padding:28px;border-radius:22px;background:white;box-shadow:0 15px 50px #0b254521;color:#17345b}
+.painel-pagamento.escondido{display:none!important}.pagamento-cabecalho h2{font-size:clamp(24px,4vw,34px);margin:10px 0}.pagamento-cabecalho p{margin:10px 0;line-height:1.6}.pagamento-etapa{font-size:12px;font-weight:800;letter-spacing:1px;color:#227945}
+.pagamento-form{display:grid;gap:15px;margin-top:22px}.pagamento-form label{display:grid;gap:7px;font-weight:700;font-size:14px}.pagamento-form label small{font-weight:400}.pagamento-form input{width:100%;min-width:0;box-sizing:border-box;padding:13px 15px;border:1px solid #bacbe0;border-radius:11px;font:inherit;background:#fff;color:#183352}.pagamento-form input:focus{outline:2px solid #2c78c0;border-color:transparent}.pagamento-dupla{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pagamento-form button,.painel-pagamento>button{width:100%;border:none;border-radius:11px;padding:15px;font:inherit;font-weight:800;cursor:pointer;background:#216da7;color:#fff}.pagamento-form button:disabled{opacity:.6;cursor:wait}.pagamento-form .pagamento-depois{background:#edf3f8;color:#225477}@media(max-width:470px){.painel-pagamento{padding:18px}.pagamento-dupla{grid-template-columns:1fr}}

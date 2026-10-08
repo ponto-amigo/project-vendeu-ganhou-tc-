@@ -63,6 +63,8 @@ function mostrarTelaCodigo({ limparCampo = false } = {}) {
   tabuleiro.innerHTML = '';
 
   painelJogo.classList.add('escondido');
+  document.getElementById('painelPagamento').classList.add('escondido');
+  document.getElementById('pagamentoConcluido').classList.add('escondido');
   painelLogin.classList.remove('escondido');
 
   if (limparCampo) codigoUsuario.value = '';
@@ -366,9 +368,8 @@ formCodigo.addEventListener('submit', async (event) => {
 
     if (dados.finalizado) {
       limparEstado(codigo);
-      erroLogin.innerText = 'Este código já foi utilizado e a participação já foi concluída.';
-      codigoUsuario.focus();
-      codigoUsuario.select();
+      if (dados.pagamentoPendente) { abrirPagamento(dados); return; }
+      mostrarPagamentoConcluido();
       return;
     }
 
@@ -426,6 +427,7 @@ async function virarCarta(cartaClicada) {
     // Depois do sorteio, não mantém o participante conectado no navegador.
     // Ao atualizar, reabrir o link ou voltar pelo Safari, a página retorna ao campo de código.
     limparEstado(usuarioAtual.codigo);
+    abrirPagamento(dados, true);
   } catch (erro) {
     cartaClicada.classList.remove('selecionada', 'revelando');
     mensagem.innerText = erro.message;
@@ -457,3 +459,35 @@ window.addEventListener('pointerdown', garantirAudio, { once: true });
 
 async function carregarConfiguracaoPublica(){try{const r=await fetch('/api/public-config',{cache:'no-store'}),d=await r.json();if(!r.ok||!d.ok)return;campaignSettings=d.settings||campaignSettings;const title=document.getElementById('tituloCampanha'),tag=document.getElementById('tagCampanha'),inst=document.getElementById('instrucaoCampanha'),logo=document.getElementById('logoCampanha'),overlay=document.getElementById('overlayTag');if(title)title.textContent=campaignSettings.campaignName||'VENDEU, GANHOU';if(tag){tag.textContent=campaignSettings.campaignTag||'';tag.style.display=campaignSettings.campaignTag?'':'none'}if(inst)inst.textContent=campaignSettings.instruction||'';if(logo&&campaignSettings.logoUrl)logo.src=campaignSettings.logoUrl;if(overlay)overlay.textContent=campaignSettings.campaignTag||campaignSettings.campaignName||'';if(campaignSettings.primaryColor)document.documentElement.style.setProperty('--tc-blue',campaignSettings.primaryColor);if(campaignSettings.secondaryColor)document.documentElement.style.setProperty('--tc-green',campaignSettings.secondaryColor);document.title=`${campaignSettings.campaignName||'Vendeu, Ganhou'} | Total Cash`}catch(e){console.warn('Configuração pública indisponível:',e.message)}}
 carregarConfiguracaoPublica();
+
+// O resultado do sorteio permanece finalizado; apenas os dados para pagamento ficam pendentes.
+let pagamentoAtual=null;
+function abrirPagamento(dados,aposSorteio=false){
+ pagamentoAtual={codigo:dados.usuario.codigo,nome:dados.usuario.nome,premio:dados.premio};
+ document.getElementById('pagamentoResumo').textContent=`${pagamentoAtual.nome} • Código ${pagamentoAtual.codigo} • Prêmio: ${pagamentoAtual.premio}`;
+ document.getElementById('painelLogin').classList.add('escondido');
+ if(!aposSorteio)document.getElementById('painelJogo').classList.add('escondido');
+ document.getElementById('pagamentoConcluido').classList.add('escondido');
+ document.getElementById('painelPagamento').classList.remove('escondido');
+ document.getElementById('pagamentoErro').textContent='';
+ document.getElementById('painelPagamento').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function mostrarPagamentoConcluido(){
+ pagamentoAtual=null;
+ document.getElementById('painelLogin').classList.add('escondido');
+ document.getElementById('painelJogo').classList.add('escondido');
+ document.getElementById('painelPagamento').classList.add('escondido');
+ document.getElementById('pagamentoConcluido').classList.remove('escondido');
+}
+document.getElementById('formPagamento').addEventListener('submit',async e=>{
+ e.preventDefault();if(!pagamentoAtual)return;
+ const btn=document.getElementById('btnSalvarPagamento'),erro=document.getElementById('pagamentoErro');erro.textContent='';btn.disabled=true;
+ try{
+  const dados=Object.fromEntries(new FormData(e.currentTarget).entries());
+  const r=await chamarApi('/api/pagamento',{codigo:pagamentoAtual.codigo,...dados});
+  if(r.notificacaoWhatsapp==='failed'||r.notificacaoWhatsapp==='pending')console.warn('Pagamento salvo; aviso WhatsApp pendente:',r.notificacaoWhatsapp);
+  e.currentTarget.reset();mostrarPagamentoConcluido();
+ }catch(err){erro.textContent=err.message}finally{btn.disabled=false}
+});
+document.getElementById('btnPagamentoDepois').onclick=()=>{pagamentoAtual=null;mostrarTelaCodigo({limparCampo:true})};
+document.getElementById('btnVoltarPagamento').onclick=()=>mostrarTelaCodigo({limparCampo:true});
