@@ -331,3 +331,12 @@ tbody tr:hover { background:rgba(255,255,255,.025); }
   .modal-actions .btn { flex:1; }
   .actions > div:last-child { display:grid; grid-template-columns:1fr; }
 }
+
+/* Consulta bancária administrativa */
+.payment-dialog-body{padding:28px;min-width:min(620px,90vw)}
+.payment-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:22px 0}
+.payment-fields>div{padding:14px;border:1px solid rgba(133,160,198,.25);border-radius:12px;min-width:0;background:rgba(100,145,190,.07)}
+.payment-fields span{display:block;font-size:12px;opacity:.72;margin-bottom:5px}
+.payment-fields strong{display:block;font-size:15px;overflow-wrap:anywhere;user-select:text}
+.payment-ok{font-weight:700;color:#159963}
+@media(max-width:520px){.payment-dialog-body{padding:18px;min-width:0}.payment-fields{grid-template-columns:1fr}}

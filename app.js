@@ -481,12 +481,13 @@ function mostrarPagamentoConcluido(){
 }
 document.getElementById('formPagamento').addEventListener('submit',async e=>{
  e.preventDefault();if(!pagamentoAtual)return;
+ const formulario=e.currentTarget; // Capturado antes do await: currentTarget fica null após o evento.
  const btn=document.getElementById('btnSalvarPagamento'),erro=document.getElementById('pagamentoErro');erro.textContent='';btn.disabled=true;
  try{
   const dados=Object.fromEntries(new FormData(e.currentTarget).entries());
   const r=await chamarApi('/api/pagamento',{codigo:pagamentoAtual.codigo,...dados});
   if(r.notificacaoWhatsapp==='failed'||r.notificacaoWhatsapp==='pending')console.warn('Pagamento salvo; aviso WhatsApp pendente:',r.notificacaoWhatsapp);
-  e.currentTarget.reset();mostrarPagamentoConcluido();
+  formulario.reset();mostrarPagamentoConcluido();
  }catch(err){erro.textContent=err.message}finally{btn.disabled=false}
 });
 document.getElementById('btnPagamentoDepois').onclick=()=>{pagamentoAtual=null;mostrarTelaCodigo({limparCampo:true})};

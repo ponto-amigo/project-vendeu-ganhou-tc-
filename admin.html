@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#08111f">
   <title>Painel Total Cash</title>
   <link rel="icon" type="image/png" href="/favicon.png">
-  <link rel="stylesheet" href="admin.css?v=12">
+  <link rel="stylesheet" href="admin.css?v=14">
 </head>
 <body>
 <section id="loginPage" class="login-page">
@@ -42,6 +42,7 @@
       <button class="nav" data-view="participants">♙ Participantes</button>
       <button class="nav" data-view="prizes">★ Prêmios</button>
       <button class="nav" data-view="results">✓ Resultados</button>
+      <button class="nav" data-view="payments">▣ Dados bancários</button>
       <button class="nav" data-view="settings">⚙ Configurações</button>
     </nav>
     <div class="campaign-card">
@@ -93,6 +94,12 @@
       <article class="panel"><div class="panel-head"><div><p class="eyebrow">HISTÓRICO</p><h3>Resultados <span id="resultCount" class="count">0</span></h3></div></div><div class="table-wrap"><table><thead><tr><th>Participante</th><th>Código</th><th>Carta</th><th>Prêmio</th><th>Entrada</th><th>Sorteio</th><th>Dados para pagamento</th></tr></thead><tbody id="resultsBody"></tbody></table></div><div id="resultsEmpty" class="empty hidden">Ainda não há resultados.</div></article>
     </section>
 
+
+    <section id="view-payments" class="view">
+      <div class="actions"><div class="filters"><input id="paymentSearch" placeholder="Buscar nome, código ou contato"><select id="paymentFilter"><option value="all">Todos os sorteios</option><option value="received">Dados recebidos</option><option value="pending">Aguardando dados</option></select></div><div><button id="paymentRefresh" class="btn secondary" type="button">Atualizar</button><button id="paymentExport" class="btn secondary" type="button">Exportar CSV</button></div></div>
+      <article class="panel"><div class="panel-head"><div><p class="eyebrow">FINANCEIRO</p><h3>Dados bancários dos parceiros</h3><p class="muted">Consulte os dados enviados após o sorteio. Apenas administradores autenticados podem acessar.</p></div><span id="paymentSummary" class="pill">Carregando...</span></div><div class="table-wrap"><table><thead><tr><th>Parceiro</th><th>Código</th><th>Prêmio</th><th>Situação</th><th>Recebido em</th><th>WhatsApp</th><th>Ações</th></tr></thead><tbody id="paymentsBody"></tbody></table></div><div id="paymentsEmpty" class="empty hidden">Nenhum parceiro encontrado para esse filtro.</div></article>
+    </section>
+
     <section id="view-settings" class="view">
       <form id="settingsForm" class="settings">
         <article class="panel"><div class="panel-head"><div><p class="eyebrow">IDENTIDADE</p><h3>Dados da campanha</h3></div></div><div class="form-grid"><label class="full">Nome da campanha<input id="setName" required></label><label>Marca/assinatura<input id="setTag"></label><label>Endereço da logo<input id="setLogo" placeholder="/totalcash.png"></label><label class="full">Texto de orientação<textarea id="setInstruction" rows="3"></textarea></label><label>Cor principal<input id="setPrimary" type="color"></label><label>Cor secundária<input id="setSecondary" type="color"></label></div></article>
@@ -107,7 +114,10 @@
 <dialog id="prizeDialog" class="modal small"><form id="prizeForm"><div class="modal-head"><div><p class="eyebrow">PRÊMIO</p><h3 id="prizeTitle">Novo prêmio</h3></div><button type="button" class="close" data-close="prizeDialog">×</button></div><input id="prizeId" type="hidden"><div class="form-grid"><label class="full">Descrição<input id="prizeName" required></label><label>Quantidade<input id="prizeQuantity" type="number" min="1" max="500" value="1"></label><label class="toggle"><input id="prizeActive" type="checkbox" checked><span><strong>Prêmio ativo</strong><small>Entra nas próximas rodadas.</small></span></label></div><p id="prizeError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="prizeDialog">Cancelar</button><button class="btn primary" type="submit">Salvar</button></div></form></dialog>
 <dialog id="importDialog" class="modal"><form id="importForm"><div class="modal-head"><div><p class="eyebrow">IMPORTAÇÃO</p><h3>Importar participantes</h3></div><button type="button" class="close" data-close="importDialog">×</button></div><div class="drop"><input id="csvFile" type="file" accept=".csv,text/csv"><strong>Selecione um CSV</strong><span>Colunas: codigo, nome, contato, ativo e premioFixo.</span></div><label>Quando o código já existir<select id="importMode"><option value="skip">Ignorar</option><option value="update">Atualizar existente</option></select></label><div id="importPreview" class="preview hidden"></div><p id="importError" class="error"></p><div class="modal-actions"><button type="button" class="btn ghost" data-close="importDialog">Cancelar</button><button id="importSubmit" class="btn primary" type="submit" disabled>Importar</button></div></form></dialog>
 
+
+<dialog id="paymentDialog" class="modal"><div class="payment-dialog-body"><div class="modal-head"><div><p class="eyebrow">DADOS DE PAGAMENTO</p><h3 id="paymentDialogTitle">Dados bancários</h3></div><button type="button" class="close" data-close="paymentDialog">×</button></div><p id="paymentDialogMeta" class="muted"></p><div id="paymentDialogFields" class="payment-fields"></div><div class="modal-actions"><button type="button" class="btn secondary" id="paymentCopy">Copiar dados</button><button type="button" class="btn primary" data-close="paymentDialog">Fechar</button></div></div></dialog>
+
 <div id="toasts" class="toasts"></div>
-<script src="admin.js?v=13"></script>
+<script src="admin.js?v=14"></script>
 </body>
 </html>
